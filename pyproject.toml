@@ -15,4 +15,5 @@ dev = [
 ]
 
 [build-system]
-requires = []
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
