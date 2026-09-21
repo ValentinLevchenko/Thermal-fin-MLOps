@@ -1,7 +1,11 @@
 # 2026-m2-thermalfin-grab-gb
 M2 2026 3D thermal-fin MLOps project - Gradient Boosting
 
-Milestones
+## Project structure
+
+The repository follows the project architecture defined in the course specification.
+
+## Milestones
 
 - [ ] Define the parameter domain and sampling plan
 - [ ] Generate and validate the 3D cases
