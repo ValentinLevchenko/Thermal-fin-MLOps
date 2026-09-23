@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+
+.DS_Store
+.vscode/
+
+src/thermal_surrogate_gb.egg-info/

@@ -1,0 +1,19 @@
+[project]
+name = "thermal-surrogate-gb"
+version = "0.1.0"
+description = "M2 2026 3D thermal-fin MLOps project using Gradient Boosting"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "scipy",
+    "scikit-learn",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
