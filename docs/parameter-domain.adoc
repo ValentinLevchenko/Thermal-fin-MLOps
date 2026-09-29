@@ -1,0 +1,27 @@
+= Parameter domain and fixed settings
+
+This document defines the parameters varied in the campaign, their bounds,
+and the settings that stayed fixed. All quantities are nondimensional.
+
+== Varied parameters
+
+* L (fin length): from 0.5 to 2.5
+* t (fin thickness): form 0.2 to 0.5
+* Bi (Biot number): from 0.01 to 1, log scale
+
+
+== Fixed settings
+
+* Generator: feelpp/feelpp, commit 44487393868854b53e47e82217d3a0fbc557c8d1
+* 3D case, 4 fins, fin spacing d=0.75, box shapes 
+* Materials: generator defaults, never changed
+* Heat flux at the CPU face: 1 (nondimensional)
+* Air temperature: 0
+* Mesh size: h_max = 0.1
+
+== Why these bounds
+
+* Bi: bounds taken from the generated JSON.
+* t: below 0.2 the mesh is bad (see `docs/evidence/thin-fin-check.csv`).
+* L and t: all corners give a valid geometry and mesh
+  (see `docs/evidence/domain-corners.csv`).
