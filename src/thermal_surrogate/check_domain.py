@@ -1,11 +1,15 @@
 import gmsh
 import math, tempfile, itertools, os, subprocess, sys,csv
+import argparse # reading command-line arguments
+
+# Path to the pinned Feel++ generator
+DEFAULT_GENERATOR = os.environ.get( "FEELPP_THERMAL_FIN_GENERATOR",
+    "../feelpp/toolboxes/generator/cases/thermal_fin/case_generator_thermal_fin.py")
 
 # Generate the 3D four fin case at each (L,t) corner and check
 # markers, volume and mesh quality.
 
 EXPECTED = {"Post", "Fin_1", "Fin_2","Fin_3","Fin_4","Gamma_root","Gamma_ext"}
-GENERATOR = "../feelpp/toolboxes/generator/cases/thermal_fin/case_generator_thermal_fin.py"
 GENERATOR_COMMIT = "44487393868854b53e47e82217d3a0fbc557c8d1"
 
 L_VALUES=[0.5,1,2.5] #length: min, reference, max
@@ -52,8 +56,8 @@ def check(geo, L,t,h):
             "n_tets":len(tets), "min_gamma":round(float(min(quality)),4),
             "mesh_ok":float(min(quality)) >=MIN_GAMMA}
     
-def check_generator_commit():
-    feelpp_dir=GENERATOR.split("/toolboxes/")[0] #"../feelpp"
+def check_generator_commit(generator):
+    feelpp_dir=generator.split("/toolboxes/")[0] #"../feelpp"
     actual=subprocess.run(["git","-C",feelpp_dir, "rev-parse", "HEAD"],
                           capture_output= True,text=True,check=True).stdout.strip()
     if actual != GENERATOR_COMMIT:
@@ -64,27 +68,40 @@ def check_generator_commit():
 
 
 def main():
-    check_generator_commit()
+    parser=argparse.ArgumentParser(description="Check (L,t) domain corners of the thermal-fin generator.")
+    parser.add_argument("--generator", default=DEFAULT_GENERATOR, help="path to case_generator_thermal_fin.py (or set FEELPP_THERMAL_FIN_GENERATOR)")
+    parser.add_argument("--L", type=float, nargs="+", default=L_VALUES,help="fin length values")
+    parser.add_argument("--t", type=float, nargs="+", default=T_VALUES,help="fin thickness values")
+    parser.add_argument("--h", type=float, default=H,help="maximum mesh size")
+    parser.add_argument("--out", default=OUT,help="results file")
+    args=parser.parse_args()
+    
+    if not os.path.isfile(args.generator):
+        sys.exit(f"Generator not found at {args.generator}. Clone feelpp/feelpp next to this repo or pass --generator/ set FEELPP_THERMAL_FIN_GENERATOR")
+    
+    check_generator_commit(args.generator)
+    
     gmsh.initialize()
     gmsh.option.setNumber("General.Terminal",0)
     rows=[]
     with tempfile.TemporaryDirectory() as tmp:
         for L,t in itertools.product(L_VALUES, T_VALUES):
             odir=os.path.join(tmp,f"L{L}_t{t}")
-            subprocess.run([sys.executable, GENERATOR,"--dim", "3", "--N", "4", "--L", str(L),
+            subprocess.run([sys.executable, args.generator,"--dim", "3", "--N", "4", "--L", str(L),
                             "--t", str(t), "--d", str(D), "--cylinder", "0", "--odir", odir], check=True)
             
-            rows.append(check(os.path.join(odir,"fin.geo"),L,t,H))
+            rows.append(check(os.path.join(odir,"fin.geo"),L,t,args.h))
             print(rows[-1])
     gmsh.finalize()
     
     
 
-    os.makedirs(os.path.dirname(OUT),exist_ok=True)
-    with open(OUT,"w",newline="") as f:
+    os.makedirs(os.path.dirname(args.out),exist_ok=True)
+    with open(args.out,"w",newline="") as f:
         writer = csv.DictWriter(f, fieldnames=rows[0].keys())
         writer.writeheader()
         writer.writerows(rows)
+    print(f"Wrote {len(rows)} rows to {args.out}")
 
 if __name__=="__main__":
     main()
