@@ -16,6 +16,12 @@ L_VALUES=[0.5,1,2.5] #length: min, reference, max
 T_VALUES=[0.2,0.25,0.5] #thickness
 H=0.1 #mesh size
 D=0.75 #fixed fin spacing
+
+# Gamma = 1 for a regular tetrahedron and tends to 0 for a flat "sliver" element.
+# 0.1 is used as a sliver detector: unresolved thin fins (t < 2h) give min_gamma <= 0.013,
+# while every resolved case gives min_gamma >= 0.12 (docs/evidence/t-lower-bound.csv),
+# so any threshold in that gap gives the same decision. It is not a quality target:
+# Gmsh's own optimizer works on elements below 0.3 (Mesh.OptimizeThreshold default). 
 MIN_GAMMA=0.1
 OUT = "docs/evidence/domain-corners.csv" #results file
 
