@@ -91,7 +91,7 @@ def main():
     gmsh.option.setNumber("General.Terminal",0)
     rows=[]
     with tempfile.TemporaryDirectory() as tmp:
-        for L,t in itertools.product(L_VALUES, T_VALUES):
+        for L,t in itertools.product(args.L,args.t):
             odir=os.path.join(tmp,f"L{L}_t{t}")
             subprocess.run([sys.executable, args.generator,"--dim", "3", "--N", "4", "--L", str(L),
                             "--t", str(t), "--d", str(D), "--cylinder", "0", "--odir", odir], check=True)
