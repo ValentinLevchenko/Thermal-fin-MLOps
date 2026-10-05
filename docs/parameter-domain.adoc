@@ -31,3 +31,17 @@ so it no longer acts as a real fin. At L = 0.5 the plate area is already 4 times
 * L up to 2.5: the generator default, and the most expensive case (about 368 000 elements at t = 0.5).
 * Bi from 0.01 to 1: the bounds written by the generator in the case JSON. Bi cannot go to 0: without cooling, 
 the heat entering at the root has nowhere to go and there is no steady solution.
+
+== Mesh quality threshold
+
+A case is accepted if its worst element has gamma >= 0.1. Gamma is 1 for a perfect tetrahedron and 0 for a flat one.
+All rejected cases are below 0.013 and all accepted cases are above 0.12, so the decision does not depend on the exact threshold value.
+
+== Running the check
+
+The script expects the Feel++ repository cloned next to this repository, on commit 44487393868854b53e47e82217d3a0fbc557c8d1:
+
+../feelpp/toolboxes/generator/cases/thermal_fin/case_generator_thermal_fin.py
+
+Another location can be given with '--generator <path>' or the environment variable 'FEELPP_THERMAL_FIN_GENERATOR'.
+The script stops if the checkout is not on the pinned commit.
