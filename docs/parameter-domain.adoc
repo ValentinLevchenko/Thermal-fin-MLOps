@@ -21,7 +21,13 @@ and the settings that stayed fixed. All quantities are nondimensional.
 
 == Why these bounds
 
-* Bi: bounds taken from the generated JSON.
-* t: below 0.2 the mesh is bad (see `docs/evidence/thin-fin-check.csv`).
-* L and t: all corners give a valid geometry and mesh
-  (see `docs/evidence/domain-corners.csv`).
+* t from 0.2: with h = 0.1, t = 0.1 and t = 0.15 give degenerate elements (min_gamma between 0 and 0.013), 
+while t = 0.2 gives min_gamma >= 0.12 (`docs/evidence/t-lower-bound.csv`). The fin must hold at least two elements
+through its thickness (t >= 2h). Thinner fins would need a smaller h, which makes the meshes much bigger and the campaign more expensive.
+* t up to 0.5: stays thinner than the fin spacing d = 0.75.
+* L from 0.5: the mesh is not the limit (L = 0.1 and 0.25 pass, `docs/evidence/L-lower-bound.csv`). 
+The reason is physical: L is the overhang of the fin beyond the post. Below 0.5 the plate barely extends past the post,
+so it no longer acts as a real fin. At L = 0.5 the plate area is already 4 times the post cross-section.
+* L up to 2.5: the generator default, and the most expensive case (about 368 000 elements at t = 0.5).
+* Bi from 0.01 to 1: the bounds written by the generator in the case JSON. Bi cannot go to 0: without cooling, 
+the heat entering at the root has nowhere to go and there is no steady solution.
