@@ -1,0 +1,14 @@
+{
+    "generator": {
+        "repo": "feelpp/feelpp",
+        "commit": "44487393868854b53e47e82217d3a0fbc557c8d1",
+        "fixed": {"dim":3, "N":4, "d":0.75, "cylinder":0}
+    },
+    "mesh": {"h_max":0.1, "rule": "h_max <= t_min / 2"},
+    "heat_flux": {"nondim": 1.0, "reference": null, "units": null},
+    "parameters":{
+        "L": {"min":0.5, "max":2.5, "scale": "linear"},
+        "t": {"min":0.2, "max":0.5, "scale": "linear"},
+        "Bi": {"min":0.01, "max":1.0, "scale": "log"}
+    }
+}
