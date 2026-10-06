@@ -6,7 +6,7 @@ and the settings that stayed fixed. All quantities are nondimensional.
 == Varied parameters
 
 * L (fin length): from 0.5 to 2.5
-* t (fin thickness): form 0.2 to 0.5
+* t (fin thickness): from 0.2 to 0.5
 * Bi (Biot number): from 0.01 to 1, log scale
 
 
@@ -21,9 +21,11 @@ and the settings that stayed fixed. All quantities are nondimensional.
 
 == Why these bounds
 
-* t from 0.2: with h = 0.1, t = 0.1 and t = 0.15 give degenerate elements (min_gamma between 0 and 0.013), 
+* All corners are valid: the 9 combinations of L = 0.5, 1, 2.5 and t = 0.2, 0.25, 0.5 have all zones, the correct heated face,
+the correct volume and min_gamma between 0.12 and 0.30 (`docs/evidence/domain-corners.csv`).
+* t from 0.2: with h_max = 0.1, t = 0.1 and t = 0.15 give degenerate elements (min_gamma between 0 and 0.013), 
 while t = 0.2 gives min_gamma >= 0.12 (`docs/evidence/t-lower-bound.csv`). The fin must hold at least two elements
-through its thickness (t >= 2h). Thinner fins would need a smaller h, which makes the meshes much bigger and the campaign more expensive.
+through its thickness (t >= 2h_max). Thinner fins would need a smaller h, which makes the meshes much bigger and the campaign more expensive.
 * t up to 0.5: stays thinner than the fin spacing d = 0.75.
 * L from 0.5: the mesh is not the limit (L = 0.1 and 0.25 pass, `docs/evidence/L-lower-bound.csv`). 
 The reason is physical: L is the overhang of the fin beyond the post. Below 0.5 the plate barely extends past the post,
@@ -41,7 +43,7 @@ All rejected cases are below 0.013 and all accepted cases are above 0.12, so the
 
 The script expects the Feel++ repository cloned next to this repository, on commit 44487393868854b53e47e82217d3a0fbc557c8d1:
 
-../feelpp/toolboxes/generator/cases/thermal_fin/case_generator_thermal_fin.py
+`../feelpp/toolboxes/generator/cases/thermal_fin/case_generator_thermal_fin.py`
 
 Another location can be given with '--generator <path>' or the environment variable 'FEELPP_THERMAL_FIN_GENERATOR'.
 The script stops if the checkout is not on the pinned commit.
