@@ -5,6 +5,7 @@
         "fixed": {"dim":3, "N":4, "d":0.75, "cylinder":0}
     },
     "mesh": {"h_max":0.1, "rule": "h_max <= t_min / 2"},
+    "sampling": {"method": "latin_hypercube", "seed":2026},
     "heat_flux": {"nondim": 1.0, "reference": null, "units": null},
     "parameters":{
         "L": {"min":0.5, "max":2.5, "scale": "linear"},
