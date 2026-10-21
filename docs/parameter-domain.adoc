@@ -47,3 +47,20 @@ The script expects the Feel++ repository cloned next to this repository, on comm
 
 Another location can be given with '--generator <path>' or the environment variable 'FEELPP_THERMAL_FIN_GENERATOR'.
 The script stops if the checkout is not on the pinned commit.
+
+
+== Sampling
+
+* Method: Latin Hypercube Sampling. Each parameter range is split into n slices and each slice receives
+exactly one sample, so every part of each range is covered even with few simulations. Pure random sampling 
+can leave parts of the domain empty and a grid needs too many simulations in 3D (10 values per parameter = 1000 runs).
+* Bi is sampled on a log scale (log10 between -2 and 0) because it spans two decades, so there are as many 
+samples between 0.01 and 0.1 as between 0.1 and 1.
+* Seed: 2026, stored in `config/campaign.json`. The same seed always gives the same samples. The seed is fixed 
+before any simulation and is not changed afterwards.
+* Command: `uv run python -m thermal_surrogate.sampling --n <number of samples>` 
+writes `data/samples.csv`.
+* Each sample has a stable ID (s0000, s0001, ...), used later for the train-validation-test split.
+* Tests in `tests/test_sampling.py` check reproducibility, bounds, unique IDs and that Bi covers both decades.
+* The number of samples is chosen in the sample budget sub-issue.
+
