@@ -14,7 +14,7 @@
 set -euo pipefail
 
 
-APPTAINER=/opt/apptainer/v1.4.3/bin/apptainer
+APPTAINER=/opt/apptainer/v1.4.3/apptainer/bin/apptainer
 SIF=/data/cemosis/benchmark/feelpp-noble.sif
 H_MAX=0.1
 
