@@ -32,7 +32,7 @@ echo "case=$CASE job=${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID} node=$(hostnam
 # 1. Mesh. fin.geo sets its own sizes, so load it first and override them afterwards.
 printf 'Merge "fin.geo";\nMesh.MeshSizeMax = %s;\nMesh.MeshSizeFromPoints = 0;\n' "$H_MAX" > mesh.geo
 t0=$(date +%s)
-"$APPTAINER" exec "$SIF" gmsh mesh.geo -3 -format msh2 -o fin.msh
+/usr/bin/time -v "$APPTAINER" exec "$SIF" feelpp_toolbox_heat --config-file thermal-fin.cfg --directory "$RESULTS"
 t1=$(date +%s)
 
 
