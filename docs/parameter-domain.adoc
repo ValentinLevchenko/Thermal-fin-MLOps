@@ -64,3 +64,27 @@ writes `data/samples.csv`.
 * Tests in `tests/test_sampling.py` check reproducibility, bounds, unique IDs and that Bi covers both decades.
 * The number of samples is chosen in the sample budget sub-issue.
 
+
+
+== Sample budget
+
+Three corner cases were meshed (h_max = 0.1) and solved on Gaya with
+`slurm/budget.sh` (job 93127, partition public, 1 MPI rank,
+image /data/cemosis/benchmark/feelpp-noble.sif, Apptainer 1.4.3, Gmsh 4.12.1).
+Results are in `docs/evidence/budget-timings.csv`.
+
+* Cheapest case (L = 0.5, t = 0.2): 35 451 elements, 12 s in total.
+* Most expensive case (L = 2.5, t = 0.5): 367 603 elements, 32 s in total.
+* Times include meshing and container start-up (about 3 to 4 s per run).
+
+Taking the worst case (32 s per sample), 200 samples cost at most about 1.8 core-hours.
+
+* Smoke campaign: 5 samples, to test the full pipeline end to end.
+* Full campaign: 200 samples (140 train, 30 validation, 30 test with a 70/15/15 split).
+* The budget must be approved by the teaching team before the full campaign.
+
+Raw outputs (meshes, fields, logs) are kept on Gaya in
+`~/M2/budget-results/` and `~/M2/logs/` (job 93127); they can be regenerated with `slurm/budget.sh`.
+
+
+
