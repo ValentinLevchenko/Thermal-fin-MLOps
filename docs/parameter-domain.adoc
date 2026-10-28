@@ -83,8 +83,15 @@ Taking the worst case (32 s per sample), 200 samples cost at most about 1.8 core
 * Full campaign: 200 samples (140 train, 30 validation, 30 test with a 70/15/15 split).
 * The budget must be approved by the teaching team before the full campaign.
 
+* Peak memory of the largest case, measured with `/usr/bin/time -v` (job 93131_2):
+1.9 GB, well below the 8 GB requested.
+* Repeatability: the largest case was run twice (jobs 93127_2 and 93131_2) and gave 
+the same mean root temperature to all printed digits (1.4817411834492460).
+
 Raw outputs (meshes, fields, logs) are kept on Gaya in
 `~/M2/budget-results/` and `~/M2/logs/` (job 93127); they can be regenerated with `slurm/budget.sh`.
+Repeatability: the largest case was run twice (jobs 93127_2 and 93131_2) and gave
+the same mean root temperature to all printed digits (1.4817411834492460).
 
 
 
