@@ -7,6 +7,7 @@
     "mesh": {"h_max":0.1, "rule": "h_max <= t_min / 2"},
     "sampling": {"method": "latin_hypercube", "seed":2026},
     "budget": {"n_smoke": 5, "n_full": 200},
+    "split": {"train": 0.7, "validation": 0.15, "test": 0.15, "seed": 2026},
     "heat_flux": {"nondim": 1.0, "reference": null, "units": null},
     "parameters":{
         "L": {"min":0.5, "max":2.5, "scale": "linear"},
