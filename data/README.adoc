@@ -1,0 +1,17 @@
+= Data
+
+== Train-validation-test split
+
+* Each sample ID gets exactly one set: train (70%), validation (15%) or test (15%). 
+With 200 samples: 140 train, 30 validation, 30 test.
+* The IDs are shuffled with a fixed seed (2026, in `config/campaign.json`), 
+so the split is always the same.
+* Command: `uv run python -m thermal_surrogate.split` reads `data/samples.csv` and writes `data/splits.csv` (columns `sample_id`, `split`).
+* The split is made on the sample IDs before the campaign and does not change afterwards.
+* The test set is never used to train or tune the model. It is used once, for the final error.
+
+== Failed simulations
+
+* A sample whose simulation fails keeps its set; it is never moved to another set.
+* It can be run again with the same inputs. If it still fails, it is removed
+and listed with the reason. It is never replaced by a new sample.
