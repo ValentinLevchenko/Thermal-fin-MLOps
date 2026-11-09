@@ -1,0 +1,58 @@
+= Campaign design record
+
+This page summarizes the decisions taken before the full simulation campaign,
+for approval by the teaching team (issue #1).
+
+== Parameters (#15)
+
+* L (fin length): 0.5 to 2.5
+* t (fin thickness): 0.2 to 0.5
+* Bi (Biot number): 0.01 to 1, log scale
+* Justification and evidence: `docs/parameter-domain.adoc`, `docs/evidence/`
+
+== Fixed settings
+
+* Generator: feelpp/feelpp commit 44487393868854b53e47e82217d3a0fbc557c8d1
+* 3D, 4 fins, d = 0.75, box shapes; materials are the generator defaults
+* Heat flux at the root: 1 (nondimensional); reference value to be given by the teaching team
+* Mesh size: h_max = 0.1
+* Quantity of interest: mean temperature on Gamma_root, column `Statistics_mean_root_temperature_mean` in `heat.measures/values.csv`
+
+== Sampling (#17)
+
+* Latin Hypercube Sampling, seed 2026, Bi on a log scale
+* `uv run python -m thermal_surrogate.sampling --n 200 --output data/samples.csv`
+
+== Budget (#18)
+
+* Measured on Gaya (jobs 93127, 93131): at most 32 s and 1.9 GB per run (1 rank)
+* Smoke campaign: 5 samples. Full campaign: 200 samples (about 1.8 core-hours at most)
+* Evidence: `docs/evidence/budget-timings.csv`
+
+== Split (#19)
+
+* 70 / 15 / 15 by sample ID, seed 2026: 140 train, 30 validation, 30 test
+* `uv run python -m thermal_surrogate.split` writes `data/splits.csv`
+* Policy and failed-simulation rule: `data/README.adoc`
+
+== Environment
+
+* Gaya, partition public
+* Image: /data/cemosis/benchmark/feelpp-noble.sif (Gmsh 4.12.1 inside)
+* Apptainer 1.4.3
+* Job script: `slurm/budget.sh`
+
+== Questions for the teaching team
+
+1. Is /data/cemosis/benchmark/feelpp-noble.sif the right image?
+2. Is partition public the right one?
+3. Is the budget of 200 samples acceptable?
+4. What is the reference heat flux (value and units)?
+
+== Approval
+
+Pending.
+
+
+
+
