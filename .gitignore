@@ -1,7 +1,23 @@
+# Local environments
 .venv/
+.pytest_cache/
+
+# Generated Python files
 __pycache__/
+*.pyc
+*.egg-info/
 
 .DS_Store
 .vscode/
 
-src/thermal_surrogate_gb.egg-info/
+
+# Generated simulation artifacts
+
+*.msh
+*.vtk
+*.vtu
+*.case
+*.h5
+work/reference/fin.geo
+work/reference/thermal-fin.json
+work/reference/thermal-fin.cfg

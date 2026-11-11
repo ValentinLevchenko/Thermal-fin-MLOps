@@ -1,0 +1,23 @@
+{
+    "generated_at": "2026-11-11T22:53:37.995844+00:00",
+    "parameters": {
+        "N": 4,
+        "L": 2.5,
+        "d": 0.75,
+        "t": 0.25
+    },
+    "geometry": {
+        "dimension": 3,
+        "shape": "boxes"
+    },
+    "files": {
+        "fin.geo": "c1a90d8d22073d535641c4b0931daa99f7d73cfb80586647ab48942f3509ea7f",
+        "thermal-fin.json": "75ddeb56c3e757f4cd4ecf0dd7e9419ab0144be712699c9f98b9cd1916bb9f1f",
+        "thermal-fin.cfg": "2ea094a8110cff40c697e3e283a4c021a89d660539120fc2f6338bca74b5e6f7"
+    },
+    "templates": {
+        "fin.geo.liquid": "7f3ba32901853a61dc6b474de58c9d047deb7ae86f870de8895727d20cf8c77b",
+        "thermal_fin.json.liquid": "dd6dbadba8cd197b3b809500f7931600cadf5222d69da013e834138a1595d803",
+        "thermal-fin.cfg.liquid": "a68e1514eef992bb0bcfab69bb3c370d12791f04fe41588f55505215425a69d9"
+    }
+}

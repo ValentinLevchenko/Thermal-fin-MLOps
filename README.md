@@ -20,10 +20,10 @@ The repository follows the project architecture defined in the course specificat
 
 - [ ] Define the parameter domain and sampling plan
 - [ ] Generate and validate the 3D cases
-  - [ ] Generate the 3D four-fin geometry
-  - [ ] Generate the heat configuration and measure the quantities of interest
+  - [x] Generate the 3D four-fin geometry
+  - [x] Generate the heat configuration and measure the quantities of interest
   - [ ] Validate a reference case
-  - [ ] Automate case generation and record provenance
+  - [x] Automate case generation and record provenance
 - [ ] Run the Gaya simulation campaign
 - [ ] Build and freeze the learning dataset
 - [ ] Train and verify the Gradient Boosting surrogate
@@ -49,11 +49,28 @@ source .venv/bin/activate
 ### Generate the reference geometry
 
 ```bash
-python src/thermal_surrogate/prepare.py
+uv run python src/thermal_surrogate/prepare.py
 ```
 
 ### Generate the reference mesh 
 
 ```bash
-gmsh work/reference/fin.geo
+gmsh work/reference/fin.geo -3 -o work/reference/fin.msh
+```
+
+### Inspect the mesh
+
+```bash
+gmsh work/reference/fin.msh
+```
+
+### generate a case with custom parameteers
+
+```bash
+uv run python src/thermal_surrogate/prepare.py \
+  --N 4 \
+  --L 2.5 \
+  --d 0.75 \
+  --t 0.25 \
+  --output work/reference
 ```
