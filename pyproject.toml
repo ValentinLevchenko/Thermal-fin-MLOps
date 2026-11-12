@@ -12,6 +12,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "gmsh>=4.15.2",
     "pytest",
 ]
 
