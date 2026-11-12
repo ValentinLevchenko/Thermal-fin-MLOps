@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-11-11T23:27:41.983054+00:00",
+    "generated_at": "2026-11-12T13:54:33.575281+00:00",
     "parameters": {
         "N": 4,
         "L": 2.5,
@@ -20,10 +20,9 @@
         "thermal_fin.json.liquid": "538cc7fd1f523a6f3b0248eca6140f2097ea9a0e2f7c757cf12fe9b37e369b3c",
         "thermal-fin.cfg.liquid": "ab3b8ad09c829f647c2cd73732d99afcf956ea1574595f0f46ece1575f787895"
     },
-    "results":
-    {
+    "results": {
         "root_area": 0.9999999999999992,
-        "root_temperature_integral": 3.0368989638770518,
-        "root_temperature_mean": 3.0368989638770518
+        "root_temperature_integral": 3.036898963877052,
+        "root_temperature_mean": 3.036898963877054
     }
 }

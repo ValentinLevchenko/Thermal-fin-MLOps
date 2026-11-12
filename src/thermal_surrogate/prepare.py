@@ -3,6 +3,8 @@ import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+import csv
+import math
 
 from liquid import Environment, FileSystemLoader
 
@@ -23,7 +25,55 @@ def file_hash(path):
     return hashlib.sha256(content).hexdigest()
 
 
-def generate_case(N, L, d, t, output_dir):
+def read_measures(path):
+
+    """Read Feel++ measures and compute the mean root temperature"""
+
+    required = {
+        "Statistics_root_area_integrate",
+        "Statistics_root_temperature_integral_integrate"
+    }
+
+    with Path(path).open(newline = "", encoding = "utf-8") as f:
+
+        reader = csv.DictReader(f)
+
+        if reader.fieldnames is None:
+            raise ValueError(f"Measures CSV is empty.")
+
+        missing = required - set(reader.fieldnames)
+
+        if missing:
+            raise ValueError(f"Missing CSV columns: {sorted(missing)}")
+
+        try:
+            row = next(reader)
+        except StopIteration:
+            raise ValueError("Measures CSV contains no data rows.")
+
+    try:
+        area = float(row["Statistics_root_area_integrate"])
+        integral = float(row["Statistics_root_temperature_integral_integrate"])
+    except (TypeError, ValueError) as e:
+        raise ValueError("Measures must contain valid numeric values.") from e
+
+    if area <= 0 or not math.isfinite(area):
+        raise ValueError("Root area must be positive and finite.")
+    if not math.isfinite(integral):
+        raise ValueError("Root temperature must be finite.")
+
+    mean = integral / area
+    if not math.isfinite(mean):
+        raise ValueError("Root temperature must be finite.")
+
+    return {
+        "root_area": area,
+        "root_temperature_integral": integral,
+        "root_temperature_mean": mean
+    }
+
+
+def generate_case(N, L, d, t, output_dir, measures_path = None):
 
     """Generate geometry and Feel++ configuration files."""
 
@@ -85,6 +135,9 @@ def generate_case(N, L, d, t, output_dir):
         }
     }
 
+    if measures_path is not None:
+        manifest["results"] = read_measures(measures_path)
+
     manifest_path = output_dir / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent = 4), encoding = "utf-8")
 
@@ -98,11 +151,12 @@ def main():
 
     parser = argparse.ArgumentParser(description = "Generate a 3D thermal-fin case.")
 
-    parser.add_argument("--N",      type = int,   default = 4)
-    parser.add_argument("--L",      type = float, default = 2.5)
-    parser.add_argument("--d",      type = float, default = 0.75)
-    parser.add_argument("--t",      type = float, default = 0.25)
-    parser.add_argument("--output", type = Path, default = DEFAULT_OUTPUT)
+    parser.add_argument("--N",        type = int,   default = 4)
+    parser.add_argument("--L",        type = float, default = 2.5)
+    parser.add_argument("--d",        type = float, default = 0.75)
+    parser.add_argument("--t",        type = float, default = 0.25)
+    parser.add_argument("--output",   type = Path,  default = DEFAULT_OUTPUT)
+    parser.add_argument("--measures", type = Path,  default = None)
 
     args = parser.parse_args()
 
@@ -117,7 +171,7 @@ def main():
 
     generate_case(
         N = args.N, L = args.L, d = args.d, t = args.t,
-        output_dir = args.output
+        output_dir = args.output, measures_path = args.measures
     )
 
 
