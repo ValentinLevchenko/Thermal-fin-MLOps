@@ -94,6 +94,24 @@
             "Exports":
             {
                 "fields": ["temperature", "pid", "marker"]
+            },
+            "Measures":
+            {
+                "Statistics":
+                {
+                    "root_temperature_integral":
+                    {
+                        "type": "integrate",
+                        "expr": "heat_T:heat_T",
+                        "markers": "Gamma_root"
+                    },
+                    "root_area":
+                    {
+                        "type": "integrate",
+                        "expr": "1",
+                        "markers": "Gamma_root"
+                    }
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-11-11T22:53:37.995844+00:00",
+    "generated_at": "2026-11-11T23:27:41.983054+00:00",
     "parameters": {
         "N": 4,
         "L": 2.5,
@@ -11,13 +11,19 @@
         "shape": "boxes"
     },
     "files": {
-        "fin.geo": "c1a90d8d22073d535641c4b0931daa99f7d73cfb80586647ab48942f3509ea7f",
-        "thermal-fin.json": "75ddeb56c3e757f4cd4ecf0dd7e9419ab0144be712699c9f98b9cd1916bb9f1f",
-        "thermal-fin.cfg": "2ea094a8110cff40c697e3e283a4c021a89d660539120fc2f6338bca74b5e6f7"
+        "fin.geo": "ebe8ee803b4c610f44304c66b0f7367aad7ef7fe6d9610cf636670ce7ad9cb4e",
+        "thermal-fin.json": "9f8887ef55be0afa72e9ca50d6827f4ccb7fcb22b5355451e6fe401e93205f96",
+        "thermal-fin.cfg": "2b6827ab105f6de02391f2a804882c191b367a2379917b57e97be37330ecfe13"
     },
     "templates": {
-        "fin.geo.liquid": "7f3ba32901853a61dc6b474de58c9d047deb7ae86f870de8895727d20cf8c77b",
-        "thermal_fin.json.liquid": "dd6dbadba8cd197b3b809500f7931600cadf5222d69da013e834138a1595d803",
-        "thermal-fin.cfg.liquid": "a68e1514eef992bb0bcfab69bb3c370d12791f04fe41588f55505215425a69d9"
+        "fin.geo.liquid": "fc8182753f9baad273e6bd9f4d9e93a15b782a5a4d5245da1bee1bc0f870b24e",
+        "thermal_fin.json.liquid": "538cc7fd1f523a6f3b0248eca6140f2097ea9a0e2f7c757cf12fe9b37e369b3c",
+        "thermal-fin.cfg.liquid": "ab3b8ad09c829f647c2cd73732d99afcf956ea1574595f0f46ece1575f787895"
+    },
+    "results":
+    {
+        "root_area": 0.9999999999999992,
+        "root_temperature_integral": 3.0368989638770518,
+        "root_temperature_mean": 3.0368989638770518
     }
 }
